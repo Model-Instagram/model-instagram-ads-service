@@ -1,0 +1,26 @@
+{
+  "name": "interactions-service",
+  "version": "1.0.0",
+  "description": "interactions service for model-instagram project",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "npm run nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chadam189/model-instagram-interactions-service.git"
+  },
+  "author": "Adam Miller",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chadam189/model-instagram-interactions-service/issues"
+  },
+  "homepage": "https://github.com/chadam189/model-instagram-interactions-service#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.5"
+  }
+}
