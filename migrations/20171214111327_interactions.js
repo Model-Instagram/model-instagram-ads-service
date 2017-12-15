@@ -41,7 +41,7 @@ exports.up = (knex, Promise) => {
       table.timestamp('created_at');
     }),
 
-    knex.schema.createTable('feed', (table) => {
+    knex.schema.createTable('feeds', (table) => {
       table.increments('id').primary();
       table.string('user_id');
       table.jsonb('ad_feed');

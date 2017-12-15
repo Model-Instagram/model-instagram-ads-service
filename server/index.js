@@ -1,7 +1,10 @@
 const express = require('express');
-const db = require('../database/index.js');
+const db = require('../database/seed.js');
+// const { seedAllData } = require('../database/seed.js');
 
 const app = express();
+
+// seedAllData();
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
