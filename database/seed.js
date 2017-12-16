@@ -6,10 +6,10 @@ const chunkSize = 1000;
 let itemsToInsert = [];
 let time;
 
-const totalUserCount = 50000;
-const totalAdCount = 150000;
+const totalUserCount = 5000;
+const totalAdCount = 15000;
 const adsPerFeed = 10;
-const totalAdViewCount = 100000;
+const totalAdViewCount = 10000;
 
 const seedAdsTable = () => {
   // time = Date.now();
@@ -25,12 +25,12 @@ const seedAdsTable = () => {
     itemsToInsert.push(newAd);
   }
   console.log(`Generating ${totalAdCount} rows for the ads table took ${Math.round((Date.now() - time) / 1000, 2)} seconds`);
-  
+
   knex.batchInsert('ads', itemsToInsert, chunkSize)
     .returning('id')
     .then(() => {
       console.log(`Seeding ${totalAdCount} rows into ads table took ${Math.round((Date.now() - time) / 1000, 2)} seconds`);
-     })
+    })
     .catch(error => console.log(`error: ${error}`));
 };
 
@@ -85,23 +85,23 @@ const seedInteractionsTable = (count = 1) => {
     itemsToInsert.push(newAdClick);
   }
   console.log(`Generating ${count * (totalAdViewCount * 1.107)} rows for the interactions table took ${Math.round((Date.now() - time) / 1000, 2)} seconds`);
-  
+
   knex.batchInsert('interactions', itemsToInsert, chunkSize)
     .returning('id')
     .then(() => {
       console.log(`Seeding ${count * (totalAdViewCount * 1.107)} rows into interactions table took ${Math.round((Date.now() - time) / 1000, 2)} seconds`);
-      if (count <= 200) {
-        count++;
-        seedInteractionsTable(count);
-      }
-     })
+      // if (count <= 200) {
+      //   count++;
+      //   seedInteractionsTable(count);
+      // }
+    })
     .catch(error => console.log(`error: ${error}`));
 };
 
 const seedFriendLikesTable = () => {
   // time = Date.now();
   itemsToInsert = [];
-  
+
   for (let i = 0; i < totalUserCount; i++) {
     for (let j = 0; j < adsPerFeed; j++) {
       const newFriendLikesEntry = {
@@ -131,16 +131,16 @@ const seedFeedsTable = () => {
     const newFeed = {
       user_id: i + 1,
       ad_feed: JSON.stringify([
-        Math.ceil(Math.random * totalAdCount, 0),
-        Math.ceil(Math.random * totalAdCount, 0),
-        Math.ceil(Math.random * totalAdCount, 0),
-        Math.ceil(Math.random * totalAdCount, 0),
-        Math.ceil(Math.random * totalAdCount, 0),
-        Math.ceil(Math.random * totalAdCount, 0),
-        Math.ceil(Math.random * totalAdCount, 0),
-        Math.ceil(Math.random * totalAdCount, 0),
-        Math.ceil(Math.random * totalAdCount, 0),
-        Math.ceil(Math.random * totalAdCount, 0),
+        Math.ceil(Math.random() * totalAdCount, 0),
+        Math.ceil(Math.random() * totalAdCount, 0),
+        Math.ceil(Math.random() * totalAdCount, 0),
+        Math.ceil(Math.random() * totalAdCount, 0),
+        Math.ceil(Math.random() * totalAdCount, 0),
+        Math.ceil(Math.random() * totalAdCount, 0),
+        Math.ceil(Math.random() * totalAdCount, 0),
+        Math.ceil(Math.random() * totalAdCount, 0),
+        Math.ceil(Math.random() * totalAdCount, 0),
+        Math.ceil(Math.random() * totalAdCount, 0),
       ]),
       created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
     };
@@ -152,7 +152,7 @@ const seedFeedsTable = () => {
     .returning('id')
     .then(() => {
       console.log(`Seeding ${totalUserCount} rows into feed table took ${Math.round((Date.now() - time) / 1000, 2)} seconds`);
-     })
+    })
     .catch(error => console.log(`error: ${error}`));
 };
 
@@ -164,30 +164,6 @@ const seedAllData = () => {
   seedInteractionsTable();
 };
 
-// seedAllData();
-
 module.exports = {
-  // seedAdsTable,
-  // seedInteractionsTable,
-  // seedFriendLikesTable,
-  // seedFeedsTable,
   seedAllData,
 };
-
-// knex.batchInsert('ads', itemsToInsert, chunkSize)
-//   .returning('id')
-//   .then(() => {
-//     console.log('halfway through seeding post_likes table');
-//     itemsToInsert = [];
-//     for (let i = 0; i < 50000; i++) {
-      // const entry = {
-      //   user_id: Math.round(Math.random() * 1000, 0).toString(),
-      //   post_id: Math.round(Math.random() * 1000, 0).toString(),
-      // };
-//       itemsToInsert.push(entry);
-//     }
-//     knex.batchInsert('post_likes', itemsToInsert, chunkSize)
-//       .then(() => {console.log('done seeding post_likes table');})
-//       .catch(error => console.log(`error: ${error}`));
-//   })
-//   .catch(error => console.log(`error: ${error}`));
