@@ -6,20 +6,38 @@ const chunkSize = 1000;
 let itemsToInsert = [];
 let time;
 
-const totalUserCount = 5000;
-const totalAdCount = 15000;
+const totalUserCount = 50000;
+const totalAdCount = 150000;
 const adsPerFeed = 10;
-const totalAdViewCount = 10000;
+const totalAdViewCount = 100000;
+
+const fakeFields = {
+  img_url: [],
+  caption: [],
+  url: [],
+  advertiser_name: [],
+  username: [],
+};
+const generateFakeFields = () => {
+  for (let i = 0; i < totalUserCount; i++) {
+    fakeFields.img_url.push(faker.image.imageUrl());
+    fakeFields.caption.push(faker.company.catchPhrase());
+    fakeFields.url.push(faker.internet.url());
+    fakeFields.advertiser_name.push(faker.company.companyName());
+    fakeFields.username.push(faker.internet.userName());
+  }
+  console.log(`Generating ${totalUserCount} fake entries for each field took ${Math.round((Date.now() - time) / 1000, 2)} seconds`);
+};
 
 const seedAdsTable = () => {
   // time = Date.now();
   for (let i = 1; i <= totalAdCount; i++) {
     const newAd = {
-      img_url: faker.image.imageUrl(),
-      caption: faker.company.catchPhrase(),
-      url: faker.internet.url(),
+      img_url: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)],
+      caption: fakeFields.caption[Math.floor(Math.random() * 50000, 0)],
+      url: fakeFields.url[Math.floor(Math.random() * 50000, 0)],
       like_count: Math.floor(Math.random() * 120, 2) + 3,
-      advertiser_name: faker.company.companyName(),
+      advertiser_name: fakeFields.advertiser_name[Math.floor(Math.random() * 50000, 0)],
       created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
     };
     itemsToInsert.push(newAd);
@@ -42,17 +60,17 @@ const seedInteractionsTable = (count = 1) => {
     const newAdLike = {
       ad_id: Math.ceil(Math.random() * totalAdCount),
       user_id: Math.ceil(Math.random() * totalUserCount),
-      img_url: faker.image.imageUrl(),
-      caption: faker.company.catchPhrase(),
-      url: faker.internet.url(),
-      like_count: Math.floor(Math.random() * 1300, 0) + 3,
-      advertiser_name: faker.company.companyName(),
+      img_url: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)],
+      caption: fakeFields.caption[Math.floor(Math.random() * 50000, 0)],
+      url: fakeFields.url[Math.floor(Math.random() * 50000, 0)],
+      like_count: Math.floor(Math.random() * 1200, 2) + 3,
+      advertiser_name: fakeFields.advertiser_name[Math.floor(Math.random() * 50000, 0)],
       interaction_type: 'like',
       // 10% of ads liked will already have 'friend likes' on them
-      friend_likes: Math.random() > 0.1 ? '[]' : JSON.stringify([
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
+      friend_likes: JSON.stringify([
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
         ]),
       created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
     };
@@ -61,17 +79,19 @@ const seedInteractionsTable = (count = 1) => {
 
   for (let i = 0; i < totalAdViewCount; i++) {
     const newAdView = {
-      img_url: faker.image.imageUrl(),
-      caption: faker.company.catchPhrase(),
-      url: faker.internet.url(),
-      like_count: Math.floor(Math.random() * 120, 2) + 3,
-      advertiser_name: faker.company.companyName(),
+      ad_id: Math.ceil(Math.random() * totalAdCount),
+      user_id: Math.ceil(Math.random() * totalUserCount),
+      img_url: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)],
+      caption: fakeFields.caption[Math.floor(Math.random() * 50000, 0)],
+      url: fakeFields.url[Math.floor(Math.random() * 50000, 0)],
+      like_count: Math.floor(Math.random() * 1200, 2) + 3,
+      advertiser_name: fakeFields.advertiser_name[Math.floor(Math.random() * 50000, 0)],
       interaction_type: 'view',
       // 10% of ads viewed will have 'friend likes' on them
-      friend_likes: Math.random() > 0.1 ? '[]' : JSON.stringify([
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
+      friend_likes: JSON.stringify([
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
         ]),
       created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
     };
@@ -80,17 +100,19 @@ const seedInteractionsTable = (count = 1) => {
 
   for (let i = 0; i < totalAdViewCount * 0.007; i++) {
     const newAdClick = {
-      img_url: faker.image.imageUrl(),
-      caption: faker.company.catchPhrase(),
-      url: faker.internet.url(),
-      like_count: Math.floor(Math.random() * 120, 2) + 3,
-      advertiser_name: faker.company.companyName(),
+      ad_id: Math.ceil(Math.random() * totalAdCount),
+      user_id: Math.ceil(Math.random() * totalUserCount),
+      img_url: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)],
+      caption: fakeFields.caption[Math.floor(Math.random() * 50000, 0)],
+      url: fakeFields.url[Math.floor(Math.random() * 50000, 0)],
+      like_count: Math.floor(Math.random() * 1200, 2) + 3,
+      advertiser_name: fakeFields.advertiser_name[Math.floor(Math.random() * 50000, 0)],
       interaction_type: 'click',
       // 60% of ad clicks will have 'friend likes' on them
-      friend_likes: Math.random() > 0.6 ? '[]' : JSON.stringify([
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
+      friend_likes: JSON.stringify([
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
         ]),
       created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
     };
@@ -102,10 +124,10 @@ const seedInteractionsTable = (count = 1) => {
     .returning('id')
     .then(() => {
       console.log(`Seeding ${count * (totalAdViewCount * 1.107)} rows into interactions table took ${Math.round((Date.now() - time) / 1000, 2)} seconds`);
-      // if (count <= 200) {
-      //   count++;
-      //   seedInteractionsTable(count);
-      // }
+      if (count <= 200) {
+        count++;
+        seedInteractionsTable(count);
+      }
     })
     .catch(error => console.log(`error: ${error}`));
 };
@@ -120,9 +142,9 @@ const seedFriendLikesTable = () => {
         user_id: i + 1,
         ad_id: Math.ceil(Math.random() * totalAdCount),
         friend_likes: JSON.stringify([
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
-          { user_id: Math.ceil(Math.random() * totalUserCount), username: faker.ineternet.userName() },
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
+          { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
         ]),
         created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
       };
@@ -174,6 +196,7 @@ const seedFeedsTable = () => {
 
 const seedAllData = () => {
   time = Date.now();
+  generateFakeFields();
   seedAdsTable();
   seedFriendLikesTable();
   seedFeedsTable();

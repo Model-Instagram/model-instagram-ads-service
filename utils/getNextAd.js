@@ -9,15 +9,15 @@ const getUserFeed = (userId, startIndex) => {
   } else if (adIndex > 9) {
     adIndex = 9;
   }
-  console.log(`startIndex is ${typeof startIndex}, adIndex is ${typeof adIndex}`);
+  // console.log(`startIndex is ${typeof startIndex}, adIndex is ${typeof adIndex}`);
   const nextAdServed = (adIndex === 9 ? 0 : (++adIndex));
   return new Promise((resolve, reject) => {
     knex('feeds').where('user_id', userId).select('ad_feed')
       .then((results) => {
-        console.log(`getUserFeed internal: ${JSON.stringify(results)}`);
+        // console.log(`getUserFeed internal: ${JSON.stringify(results)}`);
         // const adId = JSON.parse(results)[0].ad_feed[adIndex];
         const adId = results[0].ad_feed[adIndex];
-        console.log(`ad id = ${adId} at ${adIndex}`);
+        // console.log(`ad id = ${adId} at ${adIndex}`);
         resolve({ userId, nextAdServed, adId });
       })
       .catch((error) => {
@@ -29,10 +29,10 @@ const getUserFeed = (userId, startIndex) => {
 
 const getAdInfo = (adId) => {
   return new Promise((resolve, reject) => {
-    console.log(`getAdInfo ad id = ${JSON.stringify(adId)}, adId is ${typeof adId}`);
+    // console.log(`getAdInfo ad id = ${JSON.stringify(adId)}, adId is ${typeof adId}`);
     knex('ads').where('id', adId).select()
       .then((results) => {
-        console.log(`getAdInfo results is ${Array.isArray(results)} ${JSON.stringify(results)}`);
+        // console.log(`getAdInfo results is ${Array.isArray(results)} ${JSON.stringify(results)}`);
         const ad = results[0];
         resolve(ad);
       })
@@ -45,13 +45,13 @@ const getAdInfo = (adId) => {
 
 const getFriendLikes = (userId, adId) => {
   return new Promise((resolve, reject) => {
-    console.log(`inside of getFriendLikes ${typeof userId} ${typeof adId}`);
+    // console.log(`inside of getFriendLikes ${typeof userId} ${typeof adId}`);
     knex('friend_likes').where({
       ad_id: adId,
       user_id: userId,
     }).select('friend_likes')
       .then((friendLikes) => {
-        console.log(`getFriendLikes results is ${Array.isArray(friendLikes)} ${JSON.stringify(friendLikes)}`);
+        // console.log(`getFriendLikes results is ${Array.isArray(friendLikes)} ${JSON.stringify(friendLikes)}`);
         resolve(friendLikes);
       })
       .catch((error) => {
@@ -65,10 +65,10 @@ const getNextAd = (userId, startIndex) => {
   return new Promise((resolve, reject) => {
     getUserFeed(userId, startIndex)
       .then((userFeed) => {
-        console.log(`user feed received! ${JSON.stringify(userFeed)}`);
+        // console.log(`user feed received! ${JSON.stringify(userFeed)}`);
         Promise.all([userFeed, getAdInfo(userFeed.adId), getFriendLikes(userId, userFeed.adId)])
           .then((results) => {
-            console.log(`getNextAd Promise.all results is ${Array.isArray(results)} ${JSON.stringify(results, null, 2)}`);
+            // console.log(`getNextAd Promise.all results is ${Array.isArray(results)} ${JSON.stringify(results, null, 2)}`);
             const ad = results[1];
             ad.friend_likes = results[2];
             const response = {
@@ -76,7 +76,7 @@ const getNextAd = (userId, startIndex) => {
               next_ad_served: results[0].nextAdServed,
               ad,
             };
-            console.log(`final response is: ${JSON.stringify(response, null, 2)}`);
+            // console.log(`final response is: ${JSON.stringify(response, null, 2)}`);
             resolve(response);
           })
           .catch((error) => {

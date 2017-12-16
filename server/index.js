@@ -1,3 +1,12 @@
+// const apm = require('elastic-apm-node').start({
+//   // Set required app name (allowed characters: a-z, A-Z, 0-9, -, _, and space)
+//   appName: 'instagram-ads',
+//   // Use if APM Server requires a token
+//   secretToken: '',
+//   // Set custom APM Server URL (default: http://localhost:8200)
+//   serverUrl: '',
+// });
+
 const express = require('express');
 const { getNextAd } = require('../utils/getNextAd.js');
 const { recordInteraction } = require('../utils/recordInteractions.js');
@@ -13,6 +22,7 @@ app.get('/users/:user_id/ad_feed/:next_ad_index', (req, res) => {
   const nextAdIndex = req.params.next_ad_index;
   getNextAd(userId, nextAdIndex)
     .then((result) => {
+      // console.log(`Successfully served up ad #${result.ad.id} for user# ${userId}`);
       res.send(result);
     })
     .catch((error) => {
