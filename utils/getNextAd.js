@@ -3,7 +3,7 @@ const { knex } = require('../database/bookshelf.js');
 
 const getUserFeed = (userId, startIndex) => {
   // data validation on startIndex
-  let adIndex = parseInt(startIndex);
+  let adIndex = startIndex;
   if (adIndex < 0) {
     adIndex = 0;
   } else if (adIndex > 9) {
@@ -16,8 +16,8 @@ const getUserFeed = (userId, startIndex) => {
       .then((results) => {
         console.log(`getUserFeed internal: ${JSON.stringify(results)}`);
         // const adId = JSON.parse(results)[0].ad_feed[adIndex];
-        const adId = results[0].ad_feed[startIndex];
-        console.log(`ad id = ${adId} at ${startIndex}`);
+        const adId = results[0].ad_feed[adIndex];
+        console.log(`ad id = ${adId} at ${adIndex}`);
         resolve({ userId, nextAdServed, adId });
       })
       .catch((error) => {
@@ -110,9 +110,22 @@ const getNextAd = (userId, startIndex) => {
 //   },
 // }
 
-const recordInteraction = () => {};
+// {
+//   "user_id": "25",
+//   "next_ad_served": 4,
+//   "ad": {
+//     "id": 6951,
+//     "img_url": "http://lorempixel.com/640/480",
+//     "caption": "Monitored content-based info-mediaries",
+//     "url": "https://august.net",
+//     "like_count": 10,
+//     "advertiser_name": "Wolff - Lang",
+//     "created_at": "2017-12-12T18:10:41.619Z",
+//     "friend_likes": []
+//   }
+// }
+
 
 module.exports = {
   getNextAd,
-  recordInteraction,
 };

@@ -1,5 +1,6 @@
 const express = require('express');
-const { getNextAd, recordInteraction } = require('../utils/helpers.js');
+const { getNextAd } = require('../utils/getNextAd.js');
+const { recordInteraction } = require('../utils/recordInteractions.js');
 // const { seedAllData } = require('../database/seed.js');
 
 // seedAllData();
@@ -16,45 +17,49 @@ app.get('/users/:user_id/ad_feed/:next_ad_index', (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.send(500);
+      res.sendStatus(500);
     });
 });
 
 // handle ad likes
 app.post('/likes/ads/:ad_id/users/:user_id', (req, res) => {
-  const adId = req.params.ad_id;
-  const userId = req.params.user_id;
-  recordInteraction(adId, userId, 'like')
+  const userId = parseInt(req.params.user_id, 10);
+  const adId = parseInt(req.params.ad_id, 10);
+  recordInteraction(userId, adId, 'like')
     .then(() => {
-      res.status(200);
+      res.sendStatus(200);
     })
-    .catc((error) => {
+    .catch((error) => {
       console.log(error);
-      res.send(500);
+      res.sendStatus(500);
     });
 });
 
 // handle ad views
 app.post('/views/ads/:ad_id/users/:user_id', (req, res) => {
-  recordInteraction(req.params.ad_id, req.params.user_id, 'view')
+  const adId = parseInt(req.params.ad_id, 10);
+  const userId = parseInt(req.params.user_id, 10);
+  recordInteraction(userId, adId, 'view')
     .then(() => {
-      res.status(200);
+      res.sendStatus(200);
     })
     .catch((error) => {
       console.log(error);
-      res.send(500);
+      res.sendStatus(500);
     });
 });
 
 // handle ad clicks
 app.post('/clicks/ads/:ad_id/users/:user_id', (req, res) => {
-  recordInteraction(req.params.ad_id, req.params.user_id, 'click')
+  const adId = parseInt(req.params.ad_id, 10);
+  const userId = parseInt(req.params.user_id, 10);
+  recordInteraction(userId, adId, 'click')
     .then(() => {
       res.status(200);
     })
     .catch((error) => {
       console.log(error);
-      res.send(500);
+      res.sendStatus(500);
     });
 });
 

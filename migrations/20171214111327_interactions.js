@@ -21,8 +21,8 @@ exports.up = (knex, Promise) => {
 
     knex.schema.createTable('interactions', (table) => {
       table.increments('id').primary();
-      table.string('ad_id');
-      table.string('user_id');
+      table.integer('ad_id');
+      table.integer('user_id');
       table.string('img_url');
       table.string('caption');
       table.string('url');
@@ -35,15 +35,15 @@ exports.up = (knex, Promise) => {
 
     knex.schema.createTable('friend_likes', (table) => {
       table.increments('id').primary();
-      table.string('user_id');
-      table.string('ad_id');
+      table.integer('user_id');
+      table.integer('ad_id');
       table.jsonb('friend_likes');
       table.timestamp('created_at');
     }),
 
     knex.schema.createTable('feeds', (table) => {
       table.increments('id').primary();
-      table.string('user_id');
+      table.integer('user_id');
       table.jsonb('ad_feed');
       table.timestamp('created_at');
     }),
