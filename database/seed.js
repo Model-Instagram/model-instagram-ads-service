@@ -1,6 +1,6 @@
 const faker = require('faker');
 const moment = require('moment');
-const { knex } = require('./bookshelf.js');
+const { knex } = require('./index.js');
 
 const chunkSize = 1000;
 let itemsToInsert = [];

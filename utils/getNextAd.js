@@ -1,5 +1,5 @@
 const Promise = require('bluebird');
-const { knex } = require('../database/bookshelf.js');
+const { knex } = require('../database/index.js');
 
 const getUserFeed = (userId, startIndex) => {
   // data validation on startIndex
