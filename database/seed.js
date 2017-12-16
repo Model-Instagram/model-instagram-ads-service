@@ -67,7 +67,7 @@ const seedInteractionsTable = (count = 1) => {
       advertiser_name: fakeFields.advertiser_name[Math.floor(Math.random() * 50000, 0)],
       interaction_type: 'like',
       // 10% of ads liked will already have 'friend likes' on them
-      friend_likes: JSON.stringify([
+      friend_likes: Math.random() > 0.1 ? '[]' : JSON.stringify([
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
@@ -88,7 +88,7 @@ const seedInteractionsTable = (count = 1) => {
       advertiser_name: fakeFields.advertiser_name[Math.floor(Math.random() * 50000, 0)],
       interaction_type: 'view',
       // 10% of ads viewed will have 'friend likes' on them
-      friend_likes: JSON.stringify([
+      friend_likes: Math.random() > 0.1 ? '[]' : JSON.stringify([
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
@@ -108,8 +108,8 @@ const seedInteractionsTable = (count = 1) => {
       like_count: Math.floor(Math.random() * 1200, 2) + 3,
       advertiser_name: fakeFields.advertiser_name[Math.floor(Math.random() * 50000, 0)],
       interaction_type: 'click',
-      // 60% of ad clicks will have 'friend likes' on them
-      friend_likes: JSON.stringify([
+      // 13.8% of ad clicks will have 'friend likes' on them
+      friend_likes: Math.random() > 0.138 ? '[]' : JSON.stringify([
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
