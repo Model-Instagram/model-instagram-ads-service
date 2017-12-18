@@ -38,7 +38,7 @@ const seedAdsTable = () => {
       url: fakeFields.url[Math.floor(Math.random() * 50000, 0)],
       like_count: Math.floor(Math.random() * 120, 2) + 3,
       advertiser_name: fakeFields.advertiser_name[Math.floor(Math.random() * 50000, 0)],
-      created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
+      created_at: moment().year(2017).month(8).date(Math.ceil(Math.random() * 90) + 15).hour(Math.floor(Math.random() * 24)).toJSON(),
     };
     itemsToInsert.push(newAd);
   }
@@ -72,7 +72,7 @@ const seedInteractionsTable = (count = 1) => {
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
         ]),
-      created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
+      created_at: moment().year(2017).month(8).date(Math.ceil(Math.random() * 90) + 15).hour(Math.floor(Math.random() * 24)).toJSON(),
     };
     itemsToInsert.push(newAdLike);
   }
@@ -93,7 +93,7 @@ const seedInteractionsTable = (count = 1) => {
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
         ]),
-      created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
+      created_at: moment().year(2017).month(8).date(Math.ceil(Math.random() * 90) + 15).hour(Math.floor(Math.random() * 24)).toJSON(),
     };
     itemsToInsert.push(newAdView);
   }
@@ -114,7 +114,7 @@ const seedInteractionsTable = (count = 1) => {
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
         ]),
-      created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
+      created_at: moment().year(2017).month(8).date(Math.ceil(Math.random() * 90) + 15).hour(Math.floor(Math.random() * 24)).toJSON(),
     };
     itemsToInsert.push(newAdClick);
   }
@@ -124,7 +124,7 @@ const seedInteractionsTable = (count = 1) => {
     .returning('id')
     .then(() => {
       console.log(`Seeding ${count * (totalAdViewCount * 1.107)} rows into interactions table took ${Math.round((Date.now() - time) / 1000, 2)} seconds`);
-      if (count <= 200) {
+      if (count <= 1000) {
         count++;
         seedInteractionsTable(count);
       }
@@ -146,7 +146,7 @@ const seedFriendLikesTable = () => {
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
           { user_id: Math.ceil(Math.random() * totalUserCount), username: fakeFields.img_url[Math.floor(Math.random() * 50000, 0)] },
         ]),
-        created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
+        created_at: moment().year(2017).month(8).date(Math.ceil(Math.random() * 90) + 15).hour(Math.floor(Math.random() * 24)).toJSON(),
       };
       itemsToInsert.push(newFriendLikesEntry);
     }
@@ -180,7 +180,7 @@ const seedFeedsTable = () => {
         Math.ceil(Math.random() * totalAdCount),
         Math.ceil(Math.random() * totalAdCount),
       ]),
-      created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
+      created_at: moment().year(2017).month(8).date(Math.ceil(Math.random() * 90) + 15).hour(Math.floor(Math.random() * 24)).toJSON(),
     };
     itemsToInsert.push(newFeed);
   }

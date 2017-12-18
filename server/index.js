@@ -11,9 +11,9 @@ const NR = require('newrelic');
 const express = require('express');
 const { getNextAd } = require('../utils/getNextAd.js');
 const { recordInteraction } = require('../utils/recordInteractions.js');
-// const { seedAllData } = require('../database/seed.js');
+const { seedAllData } = require('../database/seed.js');
 
-// seedAllData();
+seedAllData();
 
 const app = express();
 // app.use(apm.middleware.express());
