@@ -4,6 +4,6 @@ node_js:
 install:
   npm install
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database instagram;' -U postgres
 script:
   node server/index.js
