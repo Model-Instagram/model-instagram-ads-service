@@ -69,6 +69,7 @@ app.post('/clicks/ads/:ad_id/users/:user_id', (req, res) => {
 
 app.all('*', (req, res) => res.sendStatus(404));
 
-app.listen(8080, () => console.log('Ads server is listening on port 8080!'));
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log('Ads server is listening on port 8080!'));
 
 module.exports = app;
