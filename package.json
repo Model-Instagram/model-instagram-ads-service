@@ -4,7 +4,7 @@
   "description": "interactions service for model-instagram project",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "mocha --exit",
     "start": "npm run nodemon server/index.js",
     "db-start": "pg_ctl -D /usr/local/var/postgres start",
     "db-stop": "pg_ctl -D /usr/local/var/postgres stop"
@@ -30,11 +30,15 @@
     "pg": "^7.4.0"
   },
   "devDependencies": {
+    "axios": "^0.17.1",
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
     "eslint": "^4.13.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.5.1",
+    "mocha": "^4.0.1",
     "newrelic": "^2.4.2",
     "nodemon": "^1.12.5"
   }
