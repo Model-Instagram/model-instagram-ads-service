@@ -3,7 +3,7 @@ const knex = require('knex')({
   connection: process.env.PG_CONNECTION_STRING || {
     host: 'localhost',
     port: '5432',
-    database: 'instagram-test',
+    database: 'instagram',
     charset: 'utf8',
   },
 });
