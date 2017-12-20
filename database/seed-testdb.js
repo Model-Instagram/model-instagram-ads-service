@@ -127,7 +127,7 @@ const seedInteractionsTable = (count = 1) => {
     .returning('id')
     .then(() => {
       console.log(`Seeding ${count * (totalAdViewCount * 1.107)} rows into interactions table took ${Math.round((Date.now() - time) / 1000, 2)} seconds`);
-      if (count <= 1000) {
+      if (count <= 1) {
         count++;
         seedInteractionsTable(count);
       }

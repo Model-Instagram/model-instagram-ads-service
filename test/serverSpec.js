@@ -29,19 +29,27 @@ describe('Server - General', function () {
 });
 
 describe('Server - User Feed Request', function () {
-  it('should respond to requests with object', function () {
+  it('should respond to requests with object', function (done) {
     axios.get(`${baseUrl}/users/3/ad_feed/5`)
       .then((response) => {
         expect(typeof response).to.equal('object');
+        done();
       })
-      .catch(error => {});
+      .catch((error) => {
+        console.log('Error getting ad for user feed.');
+        done(error);
+      });
   });
-  it('should respond with index of next ad served to this user', function () {
+  it('should respond with index of next ad served to this user', function (done) {
     axios.get(`${baseUrl}/users/3/ad_feed/5`)
       .then((response) => {
-        expect(typeof response.next_ad_served).to.equal('number');
+        expect(typeof response.data.next_ad_served).to.equal('number');
+        done();
       })
-      .catch(error => {});
+      .catch((error) => {
+        console.log('Error getting ad for user feed.');
+        done(error);
+      });
   });
   it('should respond with all info required to display the ad to user', done => {
     axios.get(`${baseUrl}/users/3/ad_feed/5`)

@@ -10,7 +10,7 @@ before_script:
   - knex migrate:latest interactions & sleep 10
   - knex migrate:rollback interactions & sleep 10
   - knex migrate:latest interactions & sleep 10
-  - node test/seed-testdb.js & sleep 90
+  - node database/seed-testdb.js & sleep 90
   - node server/index.js & sleep 30
 script: 
   - npm test
