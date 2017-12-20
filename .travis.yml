@@ -9,3 +9,4 @@ before_script:
   - psql -c 'create database instagram;' -U postgres
 script:
   node server/index.js
+  npm test
