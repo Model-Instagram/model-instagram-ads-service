@@ -46,15 +46,24 @@ describe('Server - User Feed Request', function () {
   it('should respond with all info required to display the ad to user', done => {
     axios.get(`${baseUrl}/users/3/ad_feed/5`)
       .then((response) => {
-        expect(response.data.ad.id).to.equal(71294);
-        expect(response.data.ad.img_url).to.equal('http://lorempixel.com/640/480');
-        expect(response.data.ad.caption).to.equal('Profound holistic toolset');
-        expect(response.data.ad.url).to.equal('https://sedrick.name');
-        expect(response.data.ad.like_count).to.equal(65);
-        expect(response.data.ad.advertiser_name).to.equal('Gerlach - Cremin');
-        expect(response.data.ad.created_at).to.equal('2017-10-30T06:11:11.758Z');
-        expect(response.data.ad.friend_likes).to.deep.equal([]);
+        expect(typeof response.data.ad.id).to.equal('number');
+        expect(typeof response.data.ad.img_url).to.equal('string');
+        expect(typeof response.data.ad.caption).to.equal('string');
+        expect(typeof response.data.ad.url).to.equal('string');
+        expect(typeof response.data.ad.like_count).to.equal('number');
+        expect(typeof response.data.ad.advertiser_name).to.equal('string');
+        expect(typeof response.data.ad.created_at).to.equal('string');
+        expect(Array.isArray(response.data.ad.friend_likes)).to.equal(true);
         done();
+        // expect(response.data.ad.id).to.equal(71294);
+        // expect(response.data.ad.img_url).to.equal('http://lorempixel.com/640/480');
+        // expect(response.data.ad.caption).to.equal('Profound holistic toolset');
+        // expect(response.data.ad.url).to.equal('https://sedrick.name');
+        // expect(response.data.ad.like_count).to.equal(65);
+        // expect(response.data.ad.advertiser_name).to.equal('Gerlach - Cremin');
+        // expect(response.data.ad.created_at).to.equal('2017-10-30T06:11:11.758Z');
+        // expect(response.data.ad.friend_likes).to.deep.equal([]);
+        // done();
       })
       .catch((error) => {
         console.log('Error getting ad for user feed.');
