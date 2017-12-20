@@ -15,7 +15,7 @@ module.exports = {
   test: {
     client: 'postgresql',
     connection: {
-      database: 'instagram-test',
+      database: 'instagram_test',
     },
     migrations: {
       directory: './migrations',

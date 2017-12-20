@@ -6,7 +6,7 @@ install:
 addons:
   postgresql: 9.6
 before_script:
-  - psql -c 'create database instagram-test;' -U postgres
+  - psql -c 'create database instagram_test;' -U postgres
   - node test/seed-testdb.js
   - node server/index.js & sleep 30
 script: 
