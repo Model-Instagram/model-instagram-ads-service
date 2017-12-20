@@ -7,6 +7,6 @@ addons:
   postgresql: 9.6
 before_script:
   - psql -c 'create database instagram;' -U postgres
+  - node server/index.js
 script:
-  node server/index.js
-  npm test
+  - npm test
