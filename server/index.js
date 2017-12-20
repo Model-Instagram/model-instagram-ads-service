@@ -53,7 +53,7 @@ app.post('/views/ads/:ad_id/users/:user_id', (req, res) => {
     .then(() => {
       res.sendStatus(200);
     })
-    .catch(error => reject(error));
+    .catch(error => console.log(error));
 });
 
 // handle ad clicks
@@ -64,7 +64,7 @@ app.post('/clicks/ads/:ad_id/users/:user_id', (req, res) => {
     .then(() => {
       res.status(200);
     })
-    .catch(error => reject(error));
+    .catch(error => console.log(error));
 });
 
 app.all('*', (req, res) => res.sendStatus(404));
