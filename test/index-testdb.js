@@ -13,6 +13,8 @@ const config = require('../knexfile.js');
 bookshelf.plugin('registry');
 
 knex.migrate.latest([config]);
+// knex.migrate.rollback([config]);
+// knex.migrate.latest([config]);
 
 module.exports = {
   bookshelf,

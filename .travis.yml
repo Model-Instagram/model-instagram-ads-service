@@ -7,7 +7,10 @@ addons:
   postgresql: 9.6
 before_script:
   - psql -c 'create database instagram;' -U postgres
-  - node test/seed-testdb.js & sleep 60
+  - knex migrate:latest interactions & sleep 10
+  - knex migrate:rollback interactions & sleep 10
+  - knex migrate:latest interactions & sleep 10
+  - node test/seed-testdb.js & sleep 90
   - node server/index.js & sleep 30
 script: 
   - npm test
