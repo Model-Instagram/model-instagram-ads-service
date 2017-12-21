@@ -7,15 +7,24 @@ module.exports = {
     connection: {
       database: 'instagram',
     },
+    migrations: {
+      directory: './migrations',
+    },
     // useNullAsDefault: true,
   },
-
-  // development: {
-  //   client: 'sqlite3',
-  //   connection: {
-  //     filename: './dev.sqlite3'
-  //   }
-  // },
+  test: {
+    client: 'postgresql',
+    connection: {
+      database: 'instagram_test',
+    },
+    migrations: {
+      directory: './migrations',
+    },
+    seeds: {
+        directory: './seeds/',
+    },
+    // useNullAsDefault: true,
+  },
 
   // staging: {
   //   client: 'postgresql',

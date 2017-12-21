@@ -2,6 +2,15 @@ const Promise = require('bluebird');
 const moment = require('moment');
 const { knex } = require('../database/index.js');
 
+const getRandomDate = () => {
+  return moment()
+    .year(2017)
+    .month(11)
+    .date(Math.ceil(Math.random() * 14) + 10)
+    .hour(Math.floor(Math.random() * 24))
+    .toJSON();
+};
+
 const getUserFeed = (userId, startIndex) => {
   // data validation on startIndex
   let adIndex = parseInt(startIndex, 10);
@@ -10,6 +19,7 @@ const getUserFeed = (userId, startIndex) => {
   } else if (adIndex > 9) {
     adIndex = 9;
   }
+  // if at last ad, start over by serving up first ad next time
   const nextAdServed = (adIndex === 9 ? 0 : (adIndex + 1));
 
   return new Promise((resolve, reject) => {
@@ -25,7 +35,9 @@ const getUserFeed = (userId, startIndex) => {
 const getAdInfo = (adId) => {
   return new Promise((resolve, reject) => {
     knex('ads').where('id', adId).select()
-      .then(results => resolve(results[0]))
+      .then((results) => {
+        resolve(results[0]);
+      })
       .catch(error => reject(error));
   });
 };
@@ -69,14 +81,15 @@ const getNextAd = (userId, startIndex) => {
 };
 
 const faker = require('faker');
+
 const getUserProfile = (userId) => {
-  const followers = [9628, 11727, 23302];
-  // const followers = [];
-  // for (let i = 0; i < 5; i++) {
-  //   followers.push(Math.ceil(Math.random() * 50000));
-  // }
+  // const followers = [9628, 11727, 23302];
+  const followers = [];
+  for (let i = 0; i < 5; i++) {
+    followers.push(Math.ceil(Math.random() * 50000));
+  }
   return {
-    username: faker.internet.avatar(),
+    username: faker.name.firstName(),
     followers,
   };
 };
@@ -87,7 +100,6 @@ const addFriendLike = (adId, userId, username, followerId) => {
       .where({ user_id: followerId, ad_id: adId })
       .first('id', 'friend_likes')
       .then((likesArray) => {
-        console.log(`results from getting friend likes: ${JSON.stringify(likesArray, null, 2)}`);
         if (!Array.isArray(likesArray)) {
           resolve('done');
         }
@@ -97,13 +109,9 @@ const addFriendLike = (adId, userId, username, followerId) => {
         });
         knex('friend_likes')
           .where({ user_id: followerId, ad_id: adId })
-          .set('friend_likes', likesArray)
+          .set('friend_likes', JSON.stringify(likesArray))
           .returning('friend_likes')
-          // .then(confirmation => resolve(confirmation))
-          .then((confirmation) => {
-            console.log(`confirmation ${confirmation}`);
-            resolve(confirmation);
-          })
+          .then(confirmation => resolve(confirmation))
           .catch(error => reject(error));
       })
       .catch(error => reject(error));
@@ -116,13 +124,11 @@ const updateFriendLikes = (userId, adId) => {
       .then((userProfile) => {
         const updates = [];
         userProfile.followers.forEach((follower) => {
-          console.log(`updating friend likes array for ${follower} at ${adId} with a like by ${userId} ${userProfile.username}`);
           updates.push(addFriendLike(adId, userId, userProfile.username, follower));
         });
         Promise.all(updates)
           // .then(confirmation => resolve(confirmation))
           .then((confirmation) => {
-            console.log(`confirmation ${confirmation}`);
             resolve(confirmation);
           })
           .catch(error => reject(error));
@@ -132,7 +138,6 @@ const updateFriendLikes = (userId, adId) => {
 };
 
 const incrementLikeCount = (adId) => {
-  console.log('incrementing like count for ad id', adId);
   return new Promise((resolve, reject) => {
     knex('ads')
       .where('id', adId)
@@ -152,55 +157,23 @@ const recordInteraction = (userId, adId, interactionType) => {
       .then((results) => {
         const newInteraction = {
           ad_id: results[0].id,
+          user_id: userId,
           img_url: results[0].img_url,
           caption: results[0].caption,
           url: results[0].url,
           like_count: results[0].like_count + 1,
           advertiser_name: results[0].advertiser_name,
-          friend_likes: results[1],
+          friend_likes: JSON.stringify(results[1]),
           interaction_type: interactionType,
-          created_at: moment().year(2017).month(11).date(Math.ceil(Math.random() * 14) + 10).hour(Math.floor(Math.random() * 24)).toJSON(),
-        }; 
-        console.log(`recordInteraction newInteraction: ${JSON.stringify(newInteraction, null, 2)}`);
-
-        Promise.resolve(knex('interactions').insert(newInteraction, 'id'))
-          .then(id => resolve(id))
+          created_at: getRandomDate(),
+        };
+        knex('interactions').insert(newInteraction, 'id')
+          .then(interactionId => resolve(interactionId))
           .catch(error => reject(error));
       })
       .catch(error => reject(error));
   });
 };
-
-// recordInteraction newInteraction: {
-//   "id": 1,
-//   "img_url": "http://lorempixel.com/640/480",
-//   "caption": "Up-sized regional monitoring",
-//   "url": "http://marvin.org",
-//   "like_count": 41,
-//   "advertiser_name": "Feeney, Kunde and Johnston",
-//   "created_at": "2017-12-12T21:07:06.005Z",
-//   "friend_likes": [],
-//   "ineraction_type": "like"
-// }
-
-
-
-
-// const  = () => {
-//   if (interactionType !== 'like') {
-//               resolve(newInteraction);
-//             } else {
-//               Promise.all([
-//                 newInteraction,
-//                 incrementLikeCount(adId),
-//                 updateFriendLikes(userId, adId),
-//               ])
-//                 .then(results => resolve(results[0]))
-//                 .catch(error => reject(error));
-//             }
-
-
-// };
 
 /*
 Example inputs into getNextAd:
@@ -224,9 +197,7 @@ Example results received from getNextAd:
       "friend_likes": []
     }
   }
-
 */
-
 
 module.exports = {
   getNextAd,

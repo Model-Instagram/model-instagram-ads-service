@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "8"
+install:
+  npm install
+addons:
+  postgresql: 9.6
+before_script:
+  - psql -c 'create database instagram;' -U postgres
+  - knex migrate:latest interactions & sleep 2
+  - knex migrate:rollback interactions
+  - knex migrate:latest interactions
+  - node database/seed-testdb.js & sleep 3
+  - node server/index.js & sleep 5
+script: 
+  - npm test
