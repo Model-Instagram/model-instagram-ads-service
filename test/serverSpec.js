@@ -28,21 +28,21 @@ describe('Server - General', function () {
   });
 });
 
-describe('Server - User Feed Request', function () {
-  it('should respond to requests with object', function (done) {
-    axios.get(`${baseUrl}/users/3/ad_feed/5`)
-      .then((response) => {
-        console.log('hello from 3', response);
-        expect(response).to.deep.equal(response);
-        // expect(typeof response).to.equal('object');
-        done();
-      })
-      .catch((error) => {
-        console.log('hello from 3', error);
-        console.log('Error getting ad for user feed.');
-        done(error);
-      });
-  });
+// describe('Server - User Feed Request', function () {
+//   it('should respond to requests with object', function (done) {
+//     axios.get(`${baseUrl}/users/3/ad_feed/5`)
+//       .then((response) => {
+//         console.log('hello from 3', response);
+//         expect(response).to.deep.equal(response);
+//         expect(typeof response).to.equal('object');
+//         done();
+//       })
+//       .catch((error) => {
+//         console.log('hello from 3', error);
+//         console.log('Error getting ad for user feed.');
+//         done(error);
+//       });
+//   });
   // it('should respond with index of next ad served to this user', function (done) {
   //   axios.get(`${baseUrl}/users/3/ad_feed/5`)
   //     .then((response) => {
@@ -81,7 +81,7 @@ describe('Server - User Feed Request', function () {
   //       done(error);
   //     });
   // });
-});
+// });
 
 // {
 //     "user_id": 3,
