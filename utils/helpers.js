@@ -26,19 +26,25 @@ const getUserFeed = (userId, startIndex) => {
 
 const getAdInfo = (adId) => {
   return new Promise((resolve, reject) => {
+    console.log(`inside getAdInfo with: ${adId}`);
     knex('ads').where('id', adId).select()
-      .then(results => resolve(results[0]))
+      .then((results) => {
+        console.log('finishing up with getAdInfo');
+        resolve(results[0])
+      })
       .catch(error => reject(error));
   });
 };
 
 const getFriendLikes = (userId, adId) => {
+    console.log(`inside getFriendLikes with: ${userId} ${adId}`);
   return new Promise((resolve, reject) => {
     knex('friend_likes').where({
       ad_id: adId,
       user_id: userId,
     }).select('friend_likes')
       .then((friendLikes) => {
+        console.log('finishing up with getFriendLikes');
         resolve(friendLikes);
       })
       .catch(error => reject(error));
@@ -50,7 +56,7 @@ const getNextAd = (userId, startIndex) => {
     console.log(`inside getNexAd with: ${userId} ${typeof userId}`);
     getUserFeed(userId, startIndex)
       .then((userFeed) => {
-        console.log(`GNA - after getUserFeed with: ${userFeed}`);
+        console.log(`GNA - after getUserFeed with: ${JSON.stringify(userFeed, null, 2)} UF.adId = ${userFeed.adId}`);
         Promise.all([
           userFeed,
           getAdInfo(userFeed.adId),
