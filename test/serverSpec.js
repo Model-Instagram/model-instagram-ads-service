@@ -32,7 +32,9 @@ describe('Server - User Feed Request', function () {
   it('should respond to requests with object', function (done) {
     axios.get(`${baseUrl}/users/3/ad_feed/5`)
       .then((response) => {
-        expect(typeof response).to.equal('object');
+        console.log('hello from 3', response);
+        expect(response).to.deep.equal(response);
+        // expect(typeof response).to.equal('object');
         done();
       })
       .catch((error) => {
