@@ -193,7 +193,7 @@ const seedFeedsTable = () => {
   for (let i = 0; i < totalUserCount; i++) {
     const adFeed = [];
     for (let j = 0; j < adsPerFeed; j++) {
-      adFeed.push(totalAds[((i + 1) * 3) + j]);
+      adFeed.push(((i + 1) * 3) + j);
     }
     const newFeed = {
       user_id: i + 1,

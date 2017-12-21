@@ -17,6 +17,7 @@ const getUserFeed = (userId, startIndex) => {
     knex('feeds').where('user_id', userId).select('ad_feed')
       .then((results) => {
         console.log('finishing up with getUserFeed');
+        console.log('results')
         const adId = results[0].ad_feed[adIndex];
         resolve({ userId, nextAdServed, adId });
       })
