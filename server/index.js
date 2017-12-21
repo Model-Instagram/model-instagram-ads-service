@@ -18,6 +18,7 @@ const app = express();
 app.get('/users/:user_id/ad_feed/:next_ad_index', (req, res) => {
   const userId = parseInt(req.params.user_id, 10);
   const nextAdIndex = parseInt(req.params.next_ad_index, 10);
+  console.log('inside main route');
   getNextAd(userId, nextAdIndex)
     .then((result) => {
       res.json(result);
@@ -28,14 +29,15 @@ app.get('/users/:user_id/ad_feed/:next_ad_index', (req, res) => {
 const { knex } = require('../database/index.js');
 
 app.get('/testHTTP', (req, res) => {
-  console.log('starting into testHTTP route');
-  knex('ads').select()
-    .then((results) => {
-      console.log(`results: ${JSON.stringify(results.length)}`);
-      // res.status(200);
-      res.json(results.length);
-    })
-    .catch(error => console.log(error));
+  res.send(200);
+  // console.log('starting into testHTTP route');
+  // knex('ads').select()
+  //   .then((results) => {
+  //     console.log(`results: ${JSON.stringify(results.length)}`);
+  //     // res.status(200);
+  //     res.json(results.length);
+  //   })
+  //   .catch(error => console.log(error));
 });
 
 // handle ad likes

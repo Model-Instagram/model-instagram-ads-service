@@ -45,6 +45,7 @@ const getFriendLikes = (userId, adId) => {
 
 const getNextAd = (userId, startIndex) => {
   return new Promise((resolve, reject) => {
+    console.log(`inside getNexAd with: ${userId} ${typeof userId}`);
     getUserFeed(userId, startIndex)
       .then((userFeed) => {
         Promise.all([
@@ -53,6 +54,7 @@ const getNextAd = (userId, startIndex) => {
           getFriendLikes(userId, userFeed.adId),
         ])
           .then((results) => {
+            console.log('came out of promise.all inside getNextAd');
             const ad = results[1];
             ad.friend_likes = results[2];
             const response = {
