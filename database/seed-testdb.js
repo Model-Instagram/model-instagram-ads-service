@@ -1,6 +1,6 @@
 const faker = require('faker');
 const moment = require('moment');
-const { knex } = require('./index-testdb.js');
+const { knex } = require('../test/index-testdb.js');
 
 let time;
 let itemsToInsert = [];
