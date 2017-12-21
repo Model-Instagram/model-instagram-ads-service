@@ -28,8 +28,8 @@ describe('Server - General', function () {
   });
 });
 
-// describe('Server - User Feed Request', function () {
-//   it('should respond to requests with object', function (done) {
+describe('Server - User Feed Request', function () {
+  // it('should respond to requests with object', function (done) {
 //     axios.get(`${baseUrl}/users/3/ad_feed/5`)
 //       .then((response) => {
 //         console.log('hello from 3', response);
@@ -81,7 +81,7 @@ describe('Server - General', function () {
   //       done(error);
   //     });
   // });
-// });
+});
 
 // {
 //     "user_id": 3,

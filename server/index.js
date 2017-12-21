@@ -25,8 +25,15 @@ app.get('/users/:user_id/ad_feed/:next_ad_index', (req, res) => {
     .catch(error => console.log(error));
 });
 
+const { knex } = require('../database/index.js');
+
 app.get('/testHTTP', (req, res) => {
-  res.sendStatus(200);
+  knex('ads').select()
+    .then((results) => {
+      console.log(`results: ${JSON.stringify(results.length)}`);
+      res.sendStatus(200);
+    })
+    .catch(error => console.log(error));
 });
 
 // handle ad likes
