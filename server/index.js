@@ -20,7 +20,7 @@ app.get('/users/:user_id/ad_feed/:next_ad_index', (req, res) => {
   const nextAdIndex = parseInt(req.params.next_ad_index, 10);
   getNextAd(userId, nextAdIndex)
     .then((result) => {
-      res.send(result);
+      res.json(result);
     })
     .catch(error => console.log(error));
 });
@@ -28,10 +28,12 @@ app.get('/users/:user_id/ad_feed/:next_ad_index', (req, res) => {
 const { knex } = require('../database/index.js');
 
 app.get('/testHTTP', (req, res) => {
+  console.log('starting into testHTTP route');
   knex('ads').select()
     .then((results) => {
       console.log(`results: ${JSON.stringify(results.length)}`);
-      res.sendStatus(200);
+      // res.status(200);
+      res.json(results.length);
     })
     .catch(error => console.log(error));
 });

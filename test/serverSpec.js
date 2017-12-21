@@ -8,6 +8,7 @@ describe('Server - General', function () {
   it('should respond to GET requests to /testHTTP with a 200 status code', (done) => {
     axios.get(`${baseUrl}/testHTTP`)
       .then((response) => {
+        console.log(`the eff is juice: ${JSON.stringify(response.data)}`);
         expect(response.status).to.equal(200);
         done();
       })
@@ -19,7 +20,7 @@ describe('Server - General', function () {
   it('should respond to invalid routes with a 404 status code', function (done) {
     axios.get(`${baseUrl}/arblegarble`)
       .then((response) => {
-        done();
+        done(response);
       })
       .catch((error) => {
         expect(error.response.status).to.equal(404);
