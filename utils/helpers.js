@@ -3,6 +3,7 @@ const moment = require('moment');
 const { knex } = require('../database/index.js');
 
 const getUserFeed = (userId, startIndex) => {
+  console.log(`inside getUserFeed with: ${userId} ${startIndex}`);
   // data validation on startIndex
   let adIndex = parseInt(startIndex, 10);
   if (adIndex < 0) {
@@ -15,6 +16,7 @@ const getUserFeed = (userId, startIndex) => {
   return new Promise((resolve, reject) => {
     knex('feeds').where('user_id', userId).select('ad_feed')
       .then((results) => {
+        console.log('finishing up with getUserFeed');
         const adId = results[0].ad_feed[adIndex];
         resolve({ userId, nextAdServed, adId });
       })
@@ -48,13 +50,14 @@ const getNextAd = (userId, startIndex) => {
     console.log(`inside getNexAd with: ${userId} ${typeof userId}`);
     getUserFeed(userId, startIndex)
       .then((userFeed) => {
+        console.log(`GNA - after getUserFeed with: ${userFeed}`);
         Promise.all([
           userFeed,
           getAdInfo(userFeed.adId),
           getFriendLikes(userId, userFeed.adId),
         ])
           .then((results) => {
-            console.log('came out of promise.all inside getNextAd');
+            console.log('GNA - came out of promise.all');
             const ad = results[1];
             ad.friend_likes = results[2];
             const response = {
